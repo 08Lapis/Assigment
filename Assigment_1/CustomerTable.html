@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Table</title>
+    <style>
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-top: none;
+        z-index: 99;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .autocomplete-item {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+    .autocomplete-item:hover {
+        background-color: #f1f1f1;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Search Box -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable()" autocomplete="off">
+        <div class="autocomplete-items" id="autocompleteItems"></div>
+    </div>
+    <br>
+
+    <!-- Table Section -->
+    <div id="tableSection">
+        <button id="createButton" onclick="navigateToForm()">Create</button>
+        <button id="editButton" onclick="navigateToForm()" disabled>Edit</button>
+        <br><br>
+        <table id="customerTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>NRC</th>
+                    <th>Phone Number</th>
+                    <th>Fruit</th>
+                    <th>Fruit Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <script src="CustomerTable.js"></script>
+</body>
+</html>
