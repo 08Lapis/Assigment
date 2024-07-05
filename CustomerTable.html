@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Table</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Search Box -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search" autocomplete="off">
+        <button id="search" onclick="searchTable()">Search</button>
+    </div>
+    <br>
+    <!-- Table Section -->
+    <div id="tableSection">
+        <button id="createButton" onclick="navigateToForm()"> Create </button>
+        <button id="editButton" onclick="navigateToFormEdit()" disabled> Edit </button>
+        <button id="deleteButton" onclick="deleteFunction()" disabled> Delete </button>
+        <button id="deleteAllButton" onclick="deleteAllFunction()"> Delete All </button>
+        <br><br>
+        <table id="customerTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>NRC</th>
+                    <th>Phone Number</th>
+                    <th>Fruit</th>
+                    <th>Fruit Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <script src="CustomerTable.js"></script>
+</body>
+</html>
