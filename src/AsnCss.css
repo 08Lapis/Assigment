@@ -1,0 +1,20 @@
+.grid-container {
+    /* pointer-events: none; Disables interaction */
+    /* cursor: default; */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+    gap: 50px; /* Space between the grid items */
+}
+
+.grid-item1 {
+    padding: 10px;
+    background-color: rgb(154, 167, 238);
+    /* text-align: center; */
+}
+
+.grid-item2 {
+    pointer-events: none;
+    caret-color: transparent;
+    padding: 10px;
+    background-color: rgb(154, 167, 238);
+}
