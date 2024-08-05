@@ -21,7 +21,7 @@ $exist = $conn->query("SHOW TABLES LIKE 'customers'")->num_rows > 0;
 if (!$exist) {
     // Create table if it doesn't exist
     $sql = "CREATE TABLE customers(
-        ID INT(6) AUTO_INCREMENT PRIMARY KEY,
+        ID INT(6) AUTO_INCREMENT PRIMARY KEY,   
         Name VARCHAR(30) NOT NULL,
         NRC  VARCHAR(20) NOT NULL,
         Phone VARCHAR(11) NOT NULL,
@@ -89,9 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // For reset auto increment id when all the rows are deleted else the id will start from the end of the last highest used id
-    // if ($result->num_rows < 1) {
-    //     $conn->query("ALTER TABLE customers AUTO_INCREMENT = 1");
-    // }
+    if ($result->num_rows < 1) {
+        $conn->query("ALTER TABLE customers AUTO_INCREMENT = 1");
+    }
 
     // For create
     $stmt = $conn->prepare("INSERT INTO `customers`(`Name`, `NRC`, `Phone`, `Fruit`, `Price`) VALUES (?, ?, ?, ?, ?)");
