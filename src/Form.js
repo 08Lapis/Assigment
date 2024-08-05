@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Form() {
@@ -15,6 +16,8 @@ function Form() {
         price:'',
         id:''
     });
+
+    const navigate = useNavigate();
 
     const [warn1, setWarn1] = useState();
     const [warn2, setWarn2] = useState();
@@ -86,7 +89,7 @@ function Form() {
 
     // Save
     const eSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
 
         if (!input.name) {
             setWarn1("Name field can't be blank");
@@ -148,7 +151,7 @@ function Form() {
 
             if(RP === "Data saved successfully"){
                 alert(response.data.message);
-                window.location.href = '/table';
+                navigate('/table');
                 return;
             } 
             if (RPD.includes("This name already exists")){
@@ -235,7 +238,7 @@ function Form() {
             <input style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
 
             {/* Buttons */}
-            <button type='button' style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>
+            <button style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>
 
             <button onClick={eReset}> Reset </button>
         </>

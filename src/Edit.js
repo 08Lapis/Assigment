@@ -1,6 +1,8 @@
-import React, { useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef} from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './AsnCss.css'; 
+import ShowEdit from './ShowEdit';
 
 function Edit() {
 
@@ -17,6 +19,19 @@ function Edit() {
         id:""
     });
 
+    const [inputShow, setInputShow] = useState({
+        name:"",
+        nrcF1:"",
+        nrcF2:"",
+        nrcF3:"",
+        nrcNum:"",
+        phF1:"",
+        phNum:"",
+        fruit:"",
+        price:"",
+        // id:""
+    });
+
     const [reset, setReset] = useState({
         name:"",
         nrcF1:"",
@@ -30,71 +45,98 @@ function Edit() {
     });
 
     const {paraId} = useParams();
+    const navigate = useNavigate();
 
     const [warn1, setWarn1] = useState();
     const [warn2, setWarn2] = useState();
     const [warn3, setWarn3] = useState();
     const [warn4, setWarn4] = useState();
+    const [warn5, setWarn5] = useState(false);
+
+    const paraIdRef = useRef();
     
     useEffect(() => {
-        if (paraId !== undefined) {
-            console.log(`There is a parameter, ID : ${paraId}`);
+        if (paraId !== paraIdRef.current) { // 'current' is the property of paraIdRef
+            paraIdRef.current = paraId;
+ //The logic here is, if Ref doesn't have paraId, Ref will be assigned with ParaId and the rest of the code will continue, 
+ //and when the useEffect runs again, 
+ //it will check if Ref has paraId, if it does, it will skip the code inside
 
-            axios.get(`http://localhost/asnphp/edit.php?id=${paraId}`)
-            .then(response => {
-                console.log("Response Data is", response.data)
-                if(response.data.error) {
-                    alert(response.data.error);
-                    return;
-                }
+            if (paraId) { // if paraId is 'undefined' it will become falsy
+                
+                console.log(`There is a parameter, ID : ${paraId}`);
 
-                const {ID, Name, NRC, Phone, Fruit, Price} = response.data;
+                axios.get(`http://localhost/asnphp/edit.php?id=${paraId}`)
+                .then(response => {
+                    console.log("Response Data is", response.data)
+                    if(response.data.error) {
+                        alert(response.data.error);
+                        setWarn5(true); 
+                        return;
+                    }
 
-                const rexNrc = NRC.match(/\d+$/);
+                    const {ID, Name, NRC, Phone, Fruit, Price} = response.data;
 
-                const rexFormat1Nrc = NRC.match(/^\d+\//);
+                    const rexNrc = NRC.match(/\d+$/);
 
-                const rexFormat2Nrc = NRC.match(/[a-zA-Z]+/);
+                    const rexFormat1Nrc = NRC.match(/^\d+\//);
 
-                const rexFormat3Nrc = NRC.match(/\([a-zA-Z]\)/);
+                    const rexFormat2Nrc = NRC.match(/[a-zA-Z]+/);
 
-                const rexPhF1 = Phone.match(/^\d{2}/);
+                    const rexFormat3Nrc = NRC.match(/\([a-zA-Z]\)/);
 
-                const rexPh = Phone.replace(/^\d{2}/, '');
+                    const rexPhF1 = Phone.match(/^\d{2}/);
 
-                setInput({ 
-                    ...input,
-                    id:ID,
-                    name:Name,
-                    nrcF1:rexFormat1Nrc,
-                    nrcF2:rexFormat2Nrc,
-                    nrcF3:rexFormat3Nrc,
-                    nrcNum:rexNrc,
-                    phF1:rexPhF1,
-                    phNum:rexPh,
-                    fruit:Fruit,
-                    price:Price
+                    const rexPh = Phone.replace(/^\d{2}/, '');
+
+                    setInput({ 
+                        ...input,
+                        id:ID,
+                        name:Name,
+                        nrcF1:rexFormat1Nrc,
+                        nrcF2:rexFormat2Nrc,
+                        nrcF3:rexFormat3Nrc,
+                        nrcNum:rexNrc,
+                        phF1:rexPhF1,
+                        phNum:rexPh,
+                        fruit:Fruit,
+                        price:Price
+                    });
+
+                    setInputShow({ 
+                        ...inputShow,
+                        name:Name,
+                        nrcF1:rexFormat1Nrc,
+                        nrcF2:rexFormat2Nrc,
+                        nrcF3:rexFormat3Nrc,
+                        nrcNum:rexNrc,
+                        phF1:rexPhF1,
+                        phNum:rexPh,
+                        fruit:Fruit,
+                        price:Price
+                    });
+
+                    setReset({ 
+                        ...reset,
+                        name:Name,
+                        nrcF1:rexFormat1Nrc,
+                        nrcF2:rexFormat2Nrc,
+                        nrcF3:rexFormat3Nrc,
+                        nrcNum:rexNrc,
+                        phF1:rexPhF1,
+                        phNum:rexPh,
+                        fruit:Fruit,
+                        price:Price
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Core error: ",error);
                 });
-
-                setReset({ 
-                    ...reset,
-                    name:Name,
-                    nrcF1:rexFormat1Nrc,
-                    nrcF2:rexFormat2Nrc,
-                    nrcF3:rexFormat3Nrc,
-                    nrcNum:rexNrc,
-                    phF1:rexPhF1,
-                    phNum:rexPh,
-                    fruit:Fruit,
-                    price:Price
-                });
-            })
-            .catch(error => {
-                console.error(error);
-                alert("Core error: ",error);
-            });
+            }
         }
-    }, []);
+        
+    }, [paraId]);
     
     // Name 
     const eNameChange = (event) => {
@@ -161,7 +203,13 @@ function Edit() {
 
     // Save
     const eSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
+
+        if(warn5 === true){
+            alert("You can't edit a record that does not exist");
+            navigate('/table');
+            return;
+        }
 
         if (!input.name) {
             setWarn1("Name field can't be blank");
@@ -184,6 +232,7 @@ function Edit() {
         var patternNameCount = /^[a-zA-Z\d][a-zA-Z\d\s]{0,29}$/;
         var pattern = /^\d+$/;
         var patternNrc = /^\d{6}$/;
+        var patternNrcNoAllZero = /^(?!0{6})\d{6}$/;
         var patternPh = /^\d{6,9}$/;
 
         if (!patternName.test(input.name)){
@@ -196,6 +245,8 @@ function Edit() {
             setWarn2("Enter only number in the NRC field");
         } else if (!patternNrc.test(input.nrcNum)){
             setWarn2("Must have only 6 digits in the NRC field");
+        } else if (!patternNrcNoAllZero.test(input.nrcNum)){ 
+            setWarn2("NRC number can't be all zero");
         }
 
         if (!pattern.test(input.phNum)){  
@@ -204,7 +255,7 @@ function Edit() {
             setWarn3("Must have only 6 to 9 digits in the Phone Number field");
         } 
 
-        if (!patternName.test(input.name) || !patternNameCount.test(input.name) || !pattern.test(input.nrcNum) || !patternNrc.test(input.nrcNum) || !pattern.test(input.phNum) || !patternPh.test(input.phNum)){
+        if (!patternName.test(input.name) || !patternNameCount.test(input.name) || !pattern.test(input.nrcNum) || !patternNrc.test(input.nrcNum) || !patternNrcNoAllZero.test(input.nrcNum) || !pattern.test(input.phNum) || !patternPh.test(input.phNum)){
             return;
         };
         
@@ -231,7 +282,40 @@ function Edit() {
 
             if(RP === "success"){
                 alert(response.data.message);
-                window.location.href = '/table';
+
+                const NameE = response.data.EditedData.username;
+                const NRCE = response.data.EditedData.nrc;
+                const PhoneE = response.data.EditedData.phone;
+                const FruitE = response.data.EditedData.fruit;
+                const PriceE = response.data.EditedData.fruitPrice;
+
+                    const rexNrc = NRCE.match(/\d+$/);
+
+                    const rexFormat1Nrc = NRCE.match(/^\d+\//);
+
+                    const rexFormat2Nrc = NRCE.match(/[a-zA-Z]+/);
+
+                    const rexFormat3Nrc = NRCE.match(/\([a-zA-Z]\)/);
+
+                    const rexPhF1 = PhoneE.match(/^\d{2}/);
+
+                    const rexPh = PhoneE.replace(/^\d{2}/, '');
+
+                    setInputShow({ 
+                        ...inputShow,
+                        name:NameE,
+                        nrcF1:rexFormat1Nrc,
+                        nrcF2:rexFormat2Nrc,
+                        nrcF3:rexFormat3Nrc,
+                        nrcNum:rexNrc,
+                        phF1:rexPhF1,
+                        phNum:rexPh,
+                        fruit:FruitE,
+                        price:PriceE
+                    });
+
+                console.log(`Edited Data : `, response.data.EditedData)
+                // navigate('/table');
                 return;
             } 
             if (RPD.includes("This name already exists")){
@@ -250,7 +334,7 @@ function Edit() {
         });
     };
 
-    const eReset = (event) => {
+    const eReset = () => {
         setInput({...input,
             name:reset.name,
             nrcF1:reset.nrcF1,
@@ -270,57 +354,63 @@ function Edit() {
     }
 
     return(
-        <>
-            {/* Name */}
-            <input style={{marginLeft:'10px'}} type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
+                    
+        <div className="grid-container">
+            <div className="grid-item1">
+                <>
+                    {/* Name */}
+                    <input style={{marginLeft:'10px'}} type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
+                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
 
-            {/* NRC */}
-            <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
-                <option value='12/'> 12/ </option>
-                <option value='10/'> 10/ </option>
-            </select>
+                    {/* NRC */}
+                    <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
+                        <option value='12/'> 12/ </option>
+                        <option value='10/'> 10/ </option>
+                    </select>
 
-            <select style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
-                <option value='KaMaYa'> KaMaYa </option>
-                <option value='MaYaKa'> MaYaKa </option>
-            </select>
+                    <select style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
+                        <option value='KaMaYa'> KaMaYa </option>
+                        <option value='MaYaKa'> MaYaKa </option>
+                    </select>
 
-            <select style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
-                <option value='(N)'> (N) </option>
-            </select>
+                    <select style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
+                        <option value='(N)'> (N) </option>
+                    </select>
 
-            <input type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
+                    <input type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
+                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
 
-            {/* Phone */}
-            <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
-                <option value='09'> 09 </option>
-                <option value='01'> 01 </option>
-            </select>
+                    {/* Phone */}
+                    <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
+                        <option value='09'> 09 </option>
+                        <option value='01'> 01 </option>
+                    </select>
 
-            <input type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
+                    <input type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
+                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
 
-            {/* Fruit */}
-            <select style={{marginLeft:'10px'}} value={input.fruit} onChange={eSelect}>
-                <option value="" disabled hidden> Select a fruit </option>
-                <option value='Apple'> Apple </option>
-                <option value='Orange'> Orange </option>
-                <option value='Banana'> Banana </option>
-                <option value='Mango'> Mango </option>
-                <option value='Strawberry'> Strawberry </option>
-            </select>
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
-            
-            {/* Price */}
-            <input style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
+                    {/* Fruit */}
+                    <select style={{marginLeft:'10px'}} value={input.fruit} onChange={eSelect}>
+                        <option value="" disabled hidden> Select a fruit </option>
+                        <option value='Apple'> Apple </option>
+                        <option value='Orange'> Orange </option>
+                        <option value='Banana'> Banana </option>
+                        <option value='Mango'> Mango </option>
+                        <option value='Strawberry'> Strawberry </option>
+                    </select>
+                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
+                    
+                    {/* Price */}
+                    <input style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
 
-            {/* Buttons */}
-            <button style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>
+                    {/* Buttons */}
+                    <button style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>
 
-            <button onClick={eReset}> Reset </button>
-        </>
+                    <button onClick={eReset}> Reset </button>
+                </>
+            </div>
+            <ShowEdit inputShow={inputShow} />
+        </div>
     );
 }
 
