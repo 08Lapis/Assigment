@@ -1,20 +1,35 @@
 .grid-container {
-    /* pointer-events: none; Disables interaction */
-    /* cursor: default; */
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two columns of equal width */
-    gap: 50px; /* Space between the grid items */
+    grid-template-rows: auto auto;  /* Two rows of automatic height */
+    gap: 20px; /* Space between the grid items */
 }
 
 .grid-item1 {
+    grid-column: 1 / 2; /* Span from column line 1 to column line 2 */
+    grid-row: 2 / 3; /* Span from row line 1 to row line 2 */
     padding: 10px;
     background-color: rgb(154, 167, 238);
-    /* text-align: center; */
 }
 
 .grid-item2 {
-    pointer-events: none;
-    caret-color: transparent;
+    grid-column: 2 / 3; /* Span from column line 1 to column line 2 */
+    grid-row: 2 / 3; /* Span from row line 1 to row line 2 */
     padding: 10px;
     background-color: rgb(154, 167, 238);
+    pointer-events: none;
+    caret-color: transparent;
+}
+
+.grid-item3 {
+    grid-column: 2 / 3; /* Span from column line 1 to column line 2 */
+    grid-row: 1 / 2; /* Span from row line 1 to row line 2 */
+    text-align: center;
+    font-weight: 800;
+    font-size: larger;
+    font-style: italic;
+    padding: 10px;
+    background-color: rgb(188, 197, 248);
+    pointer-events: none;
+    caret-color: transparent;
 }
