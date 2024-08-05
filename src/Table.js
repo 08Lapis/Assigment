@@ -9,7 +9,6 @@ function Table() {
     const [selectAll, setSelectAll] = useState(false);
     const [selectButton, setSelectButton] = useState('Select All');
     const [firstRender,SetFirstRender] = useState(true);
-    const [confirmation, SetConfirmation] = useState();
     
     useEffect(() => {
         axios.get('http://localhost/asnphp/table.php')
@@ -56,26 +55,28 @@ function Table() {
         }
 
         if (selectedIDs.length === data.length) {
-
             alert(`All IDs are selected`);
 
-            SetConfirmation(window.confirm(`Are you sure you want to delete all the rows?`)); 
+            var confirm1 = window.confirm(`Are you sure you want to delete all the rows?`);
         } else {
             alert(`Selected IDs : ${selectedIDs}`);
 
-            SetConfirmation(window.confirm(`Are you sure you want to delete the row of ID:${selectedIDs}?`)); 
+            var confirm2 = window.confirm(`Are you sure you want to delete the row of ID:${selectedIDs}?`);
         }
         
-        if(confirmation){
-            // Remove the deleted row from the state
-            setData(data.filter(customer => !selectedIDs.includes(customer.ID))); // How did it work? --> only the 'customer objects of the IDs' that are not present in the gID(the IDs that will be deleted or certain actions) are included in the result.
-            
-            setSelectedIDs([]);
+        if(confirm1 || confirm2){
             
             axios.post('http://localhost/asnphp/delete.php', { dId: selectedIDs })
             .then(response => {
                 console.log('Response!!:', response.data.message);
                 alert(response.data.message);
+
+                if (response.data.status === 'success'){
+                    // Remove the deleted row from the state
+                    setData(data.filter(customer => !selectedIDs.includes(customer.ID))); // How did it work? --> only the 'customer objects of the IDs' that are not present in the gID(the IDs that will be deleted or certain actions) are included in the result.
+                    
+                    setSelectedIDs([]);
+                }
             })
             .catch(error => {
                 console.error(error);

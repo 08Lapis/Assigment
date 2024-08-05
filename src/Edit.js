@@ -52,6 +52,7 @@ function Edit() {
     const [warn3, setWarn3] = useState();
     const [warn4, setWarn4] = useState();
     const [warn5, setWarn5] = useState(false);
+    const [warn6, setWarn6] = useState('Original Record');
 
     const paraIdRef = useRef();
     
@@ -282,6 +283,7 @@ function Edit() {
 
             if(RP === "success"){
                 alert(response.data.message);
+                setWarn6('Edited Record');
 
                 const NameE = response.data.EditedData.username;
                 const NRCE = response.data.EditedData.nrc;
@@ -410,6 +412,7 @@ function Edit() {
                 </>
             </div>
             <ShowEdit inputShow={inputShow} />
+            <div className="grid-item3"> {warn6} </div>
         </div>
     );
 }
