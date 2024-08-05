@@ -18,12 +18,14 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
     $id = $data['dId'];
-    
-    // Prepare and bind parameters
-    $stmt = $conn->prepare("DELETE FROM customers WHERE ID = ?");
-    $stmt->bind_param("i", $id);
 
-    if ($stmt->execute()) {
+    $preparedId = array_map('intval', $id);
+    $idList = implode(',' , $preparedId);
+
+    $sql = "DELETE FROM customers WHERE ID IN ($idList)";
+    
+
+    if ($conn->query($sql) === TRUE) {
         echo json_encode(array("status" => "success", "message"=> "Data deleted successfully"));
     } else {
         echo json_encode(array("status"=> "error", "message"=> "Delete failed"));

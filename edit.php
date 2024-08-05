@@ -47,13 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $duplicateMessage = [];
 
     // For Prevent Edit of the same data
-    $stmI = $conn->prepare("SELECT * FROM customers WHERE Name=? AND NRC=? AND Phone=? AND ID = ?");
-    $stmI->bind_param("sssi", $username, $nrc, $phone, $id);
+    $stmI = $conn->prepare("SELECT * FROM customers WHERE Name=? AND NRC=? AND Phone=? AND Fruit=? AND Price=? AND ID = ?");
+    $stmI->bind_param("sssssi", $username, $nrc, $phone, $fruit, $fruitPrice, $id);
     $stmI->execute();
     $result = $stmI->get_result(); 
 
     if ($result->num_rows > 0) { 
-        echo json_encode(array("status"=> "errorPSE","message"=> "You haven't updated any data yet under ID:$id"));
+        echo json_encode(array("status" => "errorPSE","message" => "You haven't updated any data yet under ID:$id"));
         die();
     }
     $stmI->close();
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stm3->close();
 
     if (!empty($duplicateMessage)) {
-        echo json_encode(array("status"=> "error","duplicateMessage"=> $duplicateMessage));
+        echo json_encode(array("status" => "error","duplicateMessage" => $duplicateMessage));
         die();
     }
 
@@ -103,9 +103,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssi", $username, $nrc, $phone, $fruit, $fruitPrice, $id);
     // Execute the statement
     if ($stmt->execute()) {
-        echo json_encode(array("status" => "success", "message"=> "Data edited successfully"));
+        echo json_encode(array(
+            "status" => "success", 
+            "message" => "Data edited successfully", 
+            "EditedData" => [
+                "username" => $username, 
+                "nrc" => $nrc, 
+                "phone" => $phone, 
+                "fruit" => $fruit, 
+                "fruitPrice" => $fruitPrice
+            ]
+        ));
     } else {
-        echo json_encode(array("status"=> "error","message"=> $stmt->error));
+        echo json_encode(array("status" => "error","message" => $stmt->error));
     }
 }
 
