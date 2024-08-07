@@ -1,4 +1,4 @@
-function ShowEdit({inputShow}) {
+export default function ShowEdit({inputShow}) {
     return(
         <div className="grid-item2">
             <>
@@ -52,6 +52,6 @@ function ShowEdit({inputShow}) {
     );
 }
 
-export default ShowEdit;
+// export default ShowEdit;
 
 
