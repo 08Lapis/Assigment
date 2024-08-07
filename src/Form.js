@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Form() {
+export default function Form() {
 
     const [input, setInput] = useState({
         name:'',
@@ -84,11 +84,11 @@ function Form() {
                 price = "";
                 break;
         }
-        setInput({...input, fruit : inFru, price: price}); // a state can't be updated more than once in the same block as only the last one will be updated and the above ones will be overridden.
+        setInput({...input, fruit : inFru, price: price}); // a state can't be updated more than once without the updater function in the same block as only the last one will be updated and the above ones will be overridden.
     }
 
     // Save
-    const eSubmit = (event) => {
+    const eSubmit = () => {
         // event.preventDefault();
 
         if (!input.name) {
@@ -191,59 +191,61 @@ function Form() {
     }
 
     return(
-        <>
-            {/* Name */}
-            <input style={{marginLeft:'10px'}} type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
+        <div className='createFormGrid'>
+            <div className='createForm'>
+                {/* Name */}
+                <input type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
+                <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
 
-            {/* NRC */}
-            <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
-                <option value='12/'> 12/ </option>
-                <option value='10/'> 10/ </option>
-            </select>
+                {/* NRC */}
+                <select style={{marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
+                    <option value='12/'> 12/ </option>
+                    <option value='10/'> 10/ </option>
+                </select>
 
-            <select style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
-                <option value='KaMaYa'> KaMaYa </option>
-                <option value='MaYaKa'> MaYaKa </option>
-            </select>
+                <select style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
+                    <option value='KaMaYa'> KaMaYa </option>
+                    <option value='MaYaKa'> MaYaKa </option>
+                </select>
 
-            <select style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
-                <option value='(N)'> (N) </option>
-            </select>
+                <select style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
+                    <option value='(N)'> (N) </option>
+                </select>
 
-            <input type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
+                <input type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
+                <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
 
-            {/* Phone */}
-            <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
-                <option value='09'> 09 </option>
-                <option value='01'> 01 </option>
-            </select>
+                {/* Phone */}
+                <select style={{marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
+                    <option value='09'> 09 </option>
+                    <option value='01'> 01 </option>
+                </select>
 
-            <input type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
+                <input type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
+                <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
 
-            {/* Fruit */}
-            <select style={{marginLeft:'10px'}} value={input.fruit} onChange={eSelect}>
-                <option value="" disabled hidden> Select a fruit </option>
-                <option value='Apple'> Apple </option>
-                <option value='Orange'> Orange </option>
-                <option value='Banana'> Banana </option>
-                <option value='Mango'> Mango </option>
-                <option value='Strawberry'> Strawberry </option>
-            </select>
-            <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
-            
-            {/* Price */}
-            <input style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
+                {/* Fruit */}
+                <select value={input.fruit} onChange={eSelect}>
+                    <option value="" disabled hidden> Select a fruit </option>
+                    <option value='Apple'> Apple </option>
+                    <option value='Orange'> Orange </option>
+                    <option value='Banana'> Banana </option>
+                    <option value='Mango'> Mango </option>
+                    <option value='Strawberry'> Strawberry </option>
+                </select>
+                <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
+                
+                {/* Price */}
+                <input type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
 
-            {/* Buttons */}
-            <button style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>
+                {/* Buttons */}
+                <button style={{marginRight:'88px'}} onClick={eSubmit}> Save </button>
 
-            <button onClick={eReset}> Reset </button>
-        </>
+                <button onClick={eReset}> Reset </button>
+            </div>
+        </div>
     );
 }
 
-export default Form;
+// export default Form;
 

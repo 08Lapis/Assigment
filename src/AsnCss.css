@@ -1,36 +1,91 @@
+.createFormGrid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.createForm {
+    background-color: rgb(213, 224, 253);
+    border: 2px solid rgb(125, 157, 245);
+    grid-column: 1 / 2;
+    padding: 10px;
+    margin-left: 10px;
+    /* text-align: center; */
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two columns of equal width */
     grid-template-rows: auto auto;  /* Two rows of automatic height */
     gap: 20px; /* Space between the grid items */
+    margin-left: 200px;
+    margin-right: 200px;
 }
 
 .grid-item1 {
     grid-column: 1 / 2; /* Span from column line 1 to column line 2 */
     grid-row: 2 / 3; /* Span from row line 1 to row line 2 */
     padding: 10px;
-    background-color: rgb(154, 167, 238);
+    background-color: rgb(213, 224, 253);
+    border: 2px solid rgb(125, 157, 245);
 }
 
 .grid-item2 {
+    margin-left: 25px;
     grid-column: 2 / 3; /* Span from column line 1 to column line 2 */
     grid-row: 2 / 3; /* Span from row line 1 to row line 2 */
     padding: 10px;
-    background-color: rgb(154, 167, 238);
+    background-color: rgb(213, 224, 253);
+    border: 2px solid rgb(125, 157, 245);
     pointer-events: none;
     caret-color: transparent;
+    /* text-align: center; */
 }
 
 .grid-item3 {
+    margin-left: 150px;
+    margin-right: 120px;
+    background-color: rgb(213, 224, 253);
+    border: 1px solid rgb(125, 157, 245);
     grid-column: 2 / 3; /* Span from column line 1 to column line 2 */
     grid-row: 1 / 2; /* Span from row line 1 to row line 2 */
     text-align: center;
     font-weight: 800;
-    font-size: larger;
+    font-size: medium;
     font-style: italic;
     padding: 10px;
-    background-color: rgb(188, 197, 248);
     pointer-events: none;
     caret-color: transparent;
+}
+
+table {
+    border: 2px solid rgb(125, 157, 245);
+    border-collapse: collapse;   /* Ensures borders are not double */
+    margin-left: 10px;
+}
+
+th {
+    border-bottom: 2px solid rgb(125, 157, 245);
+    border-right: 1px solid rgb(125, 157, 245);
+}
+
+.tr1 {
+    background-color: rgb(213, 224, 253);
+}
+
+tr:nth-child(2n) {
+    background-color: aliceblue;
+}
+
+td {
+    padding: 10px;
+    border-right: 1px solid rgb(125, 157, 245);
+    border-bottom: none;
+    text-align: center;
+}
+
+.std1 {
+    border-right: 1px solid rgb(125, 157, 245);
+    padding: 5px;
 }
 

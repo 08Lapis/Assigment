@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
-function Table() {
+export default function Table() {
     const [data, setData] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [selectedIDs, setSelectedIDs] = useState([]);
@@ -55,11 +55,11 @@ function Table() {
         }
 
         if (selectedIDs.length === data.length) {
-            alert(`All IDs are selected`);
+            // alert(`All IDs are selected`);
 
             var confirm1 = window.confirm(`Are you sure you want to delete all the rows?`);
         } else {
-            alert(`Selected IDs : ${selectedIDs}`);
+            // alert(`Selected IDs : ${selectedIDs}`);
 
             var confirm2 = window.confirm(`Are you sure you want to delete the row of ID:${selectedIDs}?`);
         }
@@ -104,19 +104,26 @@ function Table() {
         }
     }, [selectAll])
 
+    // const eEdit = () => {};
+
     return(
         <div>
             <input style={{marginLeft:'10px'}} type="text" placeholder="Search..." onChange={eSearch} /> <br/> <br/>
 
-            <Link to='/form'>
+            {/* <Link to='/form'>
                 <button style={{marginLeft:'10px'}}> Create </button>
-            </Link> <br/> <br/>
+            </Link> <br/> <br/> */}
 
-            {/* <button style={{marginLeft:'10px'}} onClick={eDelete}> Delete </button> <br/> <br/> */}
+            <button style={{marginLeft:'10px', marginRight:'10px'}} onClick={eAllCheck}> {selectButton} </button> 
 
-            <table style={{marginLeft:'10px'}} border="1">
+            <button onClick={eDelete}> Delete </button>
+            
+            {/* <button style={{marginLeft:'10px', marginRight:'10px'}} onClick={eEdit}> Edit </button> */}
+            <br/> <br/>
+
+            <table>
                 <thead>
-                    <tr>
+                    <tr className="tr1">
                         <th></th>
                         <th> ID </th>
                         <th> Name </th>
@@ -124,42 +131,36 @@ function Table() {
                         <th> Phone </th>
                         <th> Fruit </th>
                         <th> Price </th>
-                        <th> Action </th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredData.map((customer) => (
                         <tr key={customer.ID}>
-                            <td>
+                            <td className='std1'>
                                 <input type="checkbox" checked={selectedIDs.includes(customer.ID)} onChange={() => eCheck(customer.ID)} /> 
                                 {/* Here, the arrow function is used as the Event Handler function and React passes the event object to the parameter*/}
                             </td>
-                            <td style={{paddingLeft:'10px', paddingRight:'10px'}}>{customer.ID}</td>
-                            <td style={{paddingLeft:'10px', paddingRight:'10px'}}>{customer.Name}</td>
-                            <td style={{paddingLeft:'10px', paddingRight:'10px'}}>{customer.NRC}</td>
-                            <td style={{paddingLeft:'10px', paddingRight:'10px'}}>{customer.Phone}</td>
-                            <td style={{paddingLeft:'10px', paddingRight:'10px'}}>{customer.Fruit}</td>
-                            <td style={{paddingLeft:'10px', paddingRight:'10px'}}>{customer.Price}</td>
-                            <td style={{paddingLeft:'10px', paddingRight:'10px', paddingTop:'3px', paddingBottom:'3px'}}>
+                            <td>{customer.ID}</td>
+                            <td>{customer.Name}</td>
+                            <td>{customer.NRC}</td>
+                            <td>{customer.Phone}</td>
+                            <td>{customer.Fruit}</td>
+                            <td>{customer.Price}</td>
+                            <td>
                                 <Link to={`/edit/${customer.ID}`}>
                                     <button> Edit </button>
                                 </Link> 
                             </td>
-                            {/* <td>
-                                <button onClick={() => eDelete(customer.ID)}> Delete </button>
-                            </td> */}
                         </tr>    
                     ))}
                 </tbody>
-            </table> <br/> 
-
-            <button style={{marginLeft:'10px', marginRight:'10px'}} onClick={eDelete}> Delete </button>
-            <button onClick={eAllCheck}> {selectButton} </button>
+            </table>
         </div>
     );
 }
 
-export default Table;
+// export default Table;
 
 
 

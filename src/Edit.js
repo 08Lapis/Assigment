@@ -4,7 +4,7 @@ import axios from 'axios';
 import './AsnCss.css'; 
 import ShowEdit from './ShowEdit';
 
-function Edit() {
+export default function Edit() {
 
     const [input, setInput] = useState({
         name:"",
@@ -336,6 +336,10 @@ function Edit() {
         });
     };
 
+    useEffect(() => {
+        setWarn6('Original Record');
+    }, [input]);
+
     const eReset = () => {
         setInput({...input,
             name:reset.name,
@@ -417,5 +421,5 @@ function Edit() {
     );
 }
 
-export default Edit;
+// export default Edit;
 
