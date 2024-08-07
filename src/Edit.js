@@ -28,8 +28,7 @@ export default function Edit() {
         phF1:"",
         phNum:"",
         fruit:"",
-        price:"",
-        // id:""
+        price:""
     });
 
     const [reset, setReset] = useState({

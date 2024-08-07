@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function Form() {
 
-    const [input, setInput] = useState({
+    const defaultInput = {
         name:'',
         nrcF1:'12/',
         nrcF2:'KaMaYa',
@@ -15,7 +15,8 @@ export default function Form() {
         fruit:'',
         price:'',
         id:''
-    });
+    };
+    const [input, setInput] = useState(defaultInput);
 
     const navigate = useNavigate();
 
@@ -170,20 +171,8 @@ export default function Form() {
         });
     };
 
-    const eReset = (event) => {
-        setInput({
-            name:'',
-            nrcF1:'12/',
-            nrcF2:'KaMaYa',
-            nrcF3:'(N)',
-            nrcNum:'',
-            phF1:'09',
-            phNum:'',
-            fruit:'',
-            price:'',
-            id:''
-        });
-        
+    const eReset = () => {
+        setInput(defaultInput);
         setWarn1('');
         setWarn2('');
         setWarn3('');
