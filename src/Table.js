@@ -61,7 +61,7 @@ export default function Table() {
         } else {
             // alert(`Selected IDs : ${selectedIDs}`);
 
-            var confirm2 = window.confirm(`Are you sure you want to delete the row of ID:${selectedIDs}?`);
+            var confirm2 = window.confirm(`Are you sure you want to delete the row of ID : ${selectedIDs}?`);
         }
         
         if(confirm1 || confirm2){

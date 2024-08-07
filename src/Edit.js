@@ -63,76 +63,81 @@ export default function Edit() {
  //it will check if Ref has paraId, if it does, it will skip the code inside
 
             if (paraId) { // if paraId is 'undefined' it will become falsy
-                
-                console.log(`There is a parameter, ID : ${paraId}`);
+                const rexParaId = paraId.match(/^\d+$/);
+                if (rexParaId) {
+                    console.log(`There is a parameter, ID : ${paraId}`);
 
-                axios.get(`http://localhost/asnphp/edit.php?id=${paraId}`)
-                .then(response => {
-                    console.log("Response Data is", response.data)
-                    if(response.data.error) {
-                        alert(response.data.error);
-                        setWarn5(true); 
-                        return;
-                    }
+                    axios.get(`http://localhost/asnphp/edit.php?id=${paraId}`)
+                    .then(response => {
+                        console.log("Response Data is", response.data)
+                        if(response.data.status) {
+                            alert(`There is no such record of ID : ${paraId}`);
+                            setWarn5(true); 
+                            return;
+                        }
 
-                    const {ID, Name, NRC, Phone, Fruit, Price} = response.data;
+                        const {ID, Name, NRC, Phone, Fruit, Price} = response.data;
 
-                    const rexNrc = NRC.match(/\d+$/);
+                        const rexNrc = NRC.match(/\d+$/);
 
-                    const rexFormat1Nrc = NRC.match(/^\d+\//);
+                        const rexFormat1Nrc = NRC.match(/^\d+\//);
 
-                    const rexFormat2Nrc = NRC.match(/[a-zA-Z]+/);
+                        const rexFormat2Nrc = NRC.match(/[a-zA-Z]+/);
 
-                    const rexFormat3Nrc = NRC.match(/\([a-zA-Z]\)/);
+                        const rexFormat3Nrc = NRC.match(/\([a-zA-Z]\)/);
 
-                    const rexPhF1 = Phone.match(/^\d{2}/);
+                        const rexPhF1 = Phone.match(/^\d{2}/);
 
-                    const rexPh = Phone.replace(/^\d{2}/, '');
+                        const rexPh = Phone.replace(/^\d{2}/, '');
 
-                    setInput({ 
-                        ...input,
-                        id:ID,
-                        name:Name,
-                        nrcF1:rexFormat1Nrc,
-                        nrcF2:rexFormat2Nrc,
-                        nrcF3:rexFormat3Nrc,
-                        nrcNum:rexNrc,
-                        phF1:rexPhF1,
-                        phNum:rexPh,
-                        fruit:Fruit,
-                        price:Price
+                        setInput({ 
+                            ...input,
+                            id:ID,
+                            name:Name,
+                            nrcF1:rexFormat1Nrc,
+                            nrcF2:rexFormat2Nrc,
+                            nrcF3:rexFormat3Nrc,
+                            nrcNum:rexNrc,
+                            phF1:rexPhF1,
+                            phNum:rexPh,
+                            fruit:Fruit,
+                            price:Price
+                        });
+
+                        setInputShow({ 
+                            ...inputShow,
+                            name:Name,
+                            nrcF1:rexFormat1Nrc,
+                            nrcF2:rexFormat2Nrc,
+                            nrcF3:rexFormat3Nrc,
+                            nrcNum:rexNrc,
+                            phF1:rexPhF1,
+                            phNum:rexPh,
+                            fruit:Fruit,
+                            price:Price
+                        });
+
+                        setReset({ 
+                            ...reset,
+                            name:Name,
+                            nrcF1:rexFormat1Nrc,
+                            nrcF2:rexFormat2Nrc,
+                            nrcF3:rexFormat3Nrc,
+                            nrcNum:rexNrc,
+                            phF1:rexPhF1,
+                            phNum:rexPh,
+                            fruit:Fruit,
+                            price:Price
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert("Core error: ",error);
                     });
-
-                    setInputShow({ 
-                        ...inputShow,
-                        name:Name,
-                        nrcF1:rexFormat1Nrc,
-                        nrcF2:rexFormat2Nrc,
-                        nrcF3:rexFormat3Nrc,
-                        nrcNum:rexNrc,
-                        phF1:rexPhF1,
-                        phNum:rexPh,
-                        fruit:Fruit,
-                        price:Price
-                    });
-
-                    setReset({ 
-                        ...reset,
-                        name:Name,
-                        nrcF1:rexFormat1Nrc,
-                        nrcF2:rexFormat2Nrc,
-                        nrcF3:rexFormat3Nrc,
-                        nrcNum:rexNrc,
-                        phF1:rexPhF1,
-                        phNum:rexPh,
-                        fruit:Fruit,
-                        price:Price
-                    });
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("Core error: ",error);
-                });
+                } else {
+                    alert('Only Integer is allowed for ID');
+                    navigate('/table');
+                }
             }
         }
         
