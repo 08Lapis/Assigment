@@ -6,11 +6,11 @@ export default function Nav() {
         <>
             <div style={{margin:'10px'}}>
                 <Link to='/form'>
-                    <button style={{marginRight:'10px'}}> To Create </button>
+                    <button className='toCreate' style={{marginRight:'10px'}}> To Create </button>
                 </Link> 
             
                 <Link to='/table'>
-                    <button> To Table </button> 
+                    <button className='toTable'> To Table </button> 
                 </Link> <br/> <br/>
             </div>
         </>

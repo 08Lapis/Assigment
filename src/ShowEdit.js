@@ -1,37 +1,37 @@
 export default function ShowEdit({inputShow}) {
     return(
-        <div className="grid-item2">
+        <div className="grid-item2-content">
             <>
                 {/* Name */}
-                <input style={{marginLeft:'10px'}} type='text' name='name' value={inputShow.name} placeholder='Username' readOnly /> <br/> <br/> 
+                <input className='inputBox' style={{marginLeft:'10px'}} type='text' name='name' value={inputShow.name} placeholder='Username' readOnly /> <br/> <br/> 
 
                 {/* NRC */}
-                <select style={{marginLeft:'10px', marginRight:'3px'}} value={inputShow.nrcF1} readOnly >
+                <select className='inputBox' style={{marginLeft:'10px', marginRight:'3px'}} value={inputShow.nrcF1} readOnly >
                     <option value='12/' hidden> 12/ </option>
                     <option value='10/' hidden> 10/ </option>
                 </select>
 
-                <select style={{marginRight:'3px'}} value={inputShow.nrcF2} readOnly >
+                <select className='inputBox' style={{marginRight:'3px'}} value={inputShow.nrcF2} readOnly >
                     <option value='KaMaYa' hidden> KaMaYa </option>
                     <option value='MaYaKa' hidden> MaYaKa </option>
                 </select>
 
-                <select style={{marginRight:'3px'}} value={inputShow.nrcF3} readOnly >
+                <select className='inputBox' style={{marginRight:'3px'}} value={inputShow.nrcF3} readOnly >
                     <option value='(N)' hidden> (N) </option>
                 </select>
 
-                <input type='text' name='nrc' value={inputShow.nrcNum} placeholder='NRC' readOnly /> <br/> <br/> 
+                <input className='inputBox' type='text' name='nrc' value={inputShow.nrcNum} placeholder='NRC' readOnly /> <br/> <br/> 
 
                 {/* Phone */}
-                <select style={{marginLeft:'10px', marginRight:'3px'}} value={inputShow.phF1} readOnly >
+                <select className='inputBox' style={{marginLeft:'10px', marginRight:'3px'}} value={inputShow.phF1} readOnly >
                     <option value='09' hidden> 09 </option>
                     <option value='01' hidden> 01 </option>
                 </select>
 
-                <input type='text' name='phone' value={inputShow.phNum} placeholder='Phone' readOnly /> <br/> <br/> 
+                <input className='inputBox' type='text' name='phone' value={inputShow.phNum} placeholder='Phone' readOnly /> <br/> <br/> 
 
                 {/* Fruit */}
-                <select style={{marginLeft:'10px'}} value={inputShow.fruit} readOnly >
+                <select className='inputBox' style={{marginLeft:'10px'}} value={inputShow.fruit} readOnly >
                     <option value="" disabled hidden> Select a fruit </option>
                     <option value='Apple' hidden> Apple </option>
                     <option value='Orange' hidden> Orange </option>
@@ -41,7 +41,7 @@ export default function ShowEdit({inputShow}) {
                 </select> <br/> <br/> 
                 
                 {/* Price */}
-                <input style={{marginLeft:'10px'}} type='text' value={inputShow.price} placeholder="Price" readOnly /> <br/> <br/>
+                <input className='price' style={{marginLeft:'10px'}} type='text' value={inputShow.price} placeholder="Price" readOnly /> <br/> <br/>
 
                 {/* Buttons */}
                 {/* <button style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>

@@ -70,6 +70,7 @@ export default function Edit() {
                     axios.get(`http://localhost/asnphp/edit.php?id=${paraId}`)
                     .then(response => {
                         console.log("Response Data is", response.data)
+                        
                         if(response.data.status) {
                             alert(`There is no such record of ID : ${paraId}`);
                             setWarn5(true); 
@@ -367,40 +368,40 @@ export default function Edit() {
                     
         <div className="grid-container">
             <div className="grid-item1">
-                <>
+                <div className="grid-item1-content">
                     {/* Name */}
-                    <input style={{marginLeft:'10px'}} type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
+                    <input className='inputBox' style={{marginLeft:'10px'}} type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
                     <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
 
                     {/* NRC */}
-                    <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
+                    <select className='inputBox' style={{marginLeft:'10px', marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
                         <option value='12/'> 12/ </option>
                         <option value='10/'> 10/ </option>
                     </select>
 
-                    <select style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
+                    <select className='inputBox' style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
                         <option value='KaMaYa'> KaMaYa </option>
                         <option value='MaYaKa'> MaYaKa </option>
                     </select>
 
-                    <select style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
+                    <select className='inputBox' style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
                         <option value='(N)'> (N) </option>
                     </select>
 
-                    <input type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
+                    <input className='inputBox' type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
                     <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
 
                     {/* Phone */}
-                    <select style={{marginLeft:'10px', marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
+                    <select className='inputBox' style={{marginLeft:'10px', marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
                         <option value='09'> 09 </option>
                         <option value='01'> 01 </option>
                     </select>
 
-                    <input type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
+                    <input className='inputBox' type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
                     <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
 
                     {/* Fruit */}
-                    <select style={{marginLeft:'10px'}} value={input.fruit} onChange={eSelect}>
+                    <select className='inputBox' style={{marginLeft:'10px'}} value={input.fruit} onChange={eSelect}>
                         <option value="" disabled hidden> Select a fruit </option>
                         <option value='Apple'> Apple </option>
                         <option value='Orange'> Orange </option>
@@ -411,16 +412,20 @@ export default function Edit() {
                     <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
                     
                     {/* Price */}
-                    <input style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
+                    <input className='price' style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
 
                     {/* Buttons */}
-                    <button style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>
+                    <button className='bottom' style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>
 
-                    <button onClick={eReset}> Reset </button>
-                </>
+                    <button className='bottom' onClick={eReset}> Reset </button>
+                </div>
             </div>
-            <ShowEdit inputShow={inputShow} />
-            <div className="grid-item3"> {warn6} </div>
+            <div className="grid-item2">
+                <ShowEdit inputShow={inputShow} />
+            </div>
+            <div className="grid-item3">
+                <div className="grid-item3-content"> {warn6} </div>
+            </div>
         </div>
     );
 }

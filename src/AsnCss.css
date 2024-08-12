@@ -1,16 +1,18 @@
 .createFormGrid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px;
+    user-select: none;
 }
 
 .createForm {
     background-color: rgb(213, 224, 253);
     border: 2px solid rgb(125, 157, 245);
-    grid-column: 1 / 2;
+    width: 350px;   /* Set a fixed width */
+    height: 220px;
+    /* grid-column: 1 / 2; */
     padding: 10px;
     margin-left: 10px;
-    /* text-align: center; */
+    box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);
+    caret-color: transparent;
+    user-select: none;
 }
 
 .grid-container {
@@ -18,50 +20,91 @@
     grid-template-columns: 1fr 1fr; /* Two columns of equal width */
     grid-template-rows: auto auto;  /* Two rows of automatic height */
     gap: 20px; /* Space between the grid items */
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: 30px;
+    margin-right: 30px;
+    /* align-items: center;
+    justify-content: center; */ 
 }
 
 .grid-item1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-column: 1 / 2; /* Span from column line 1 to column line 2 */
+    grid-row: 2 / 3;
+    caret-color: transparent;
+    user-select: none;
+}
+
+.grid-item2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 2 / 3; /* Span from column line 1 to column line 2 */
+    grid-row: 2 / 3;
+    caret-color: transparent;
+    user-select: none;
+}
+
+.grid-item3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 3 / 2; /* Span from column line 1 to column line 2 */
+    grid-row: 1 / 2;
+}
+
+.grid-item1-content {
+    grid-column: 3 / 2; /* Span from column line 1 to column line 2 */
     grid-row: 2 / 3; /* Span from row line 1 to row line 2 */
     padding: 10px;
     background-color: rgb(213, 224, 253);
     border: 2px solid rgb(125, 157, 245);
+    width: 365px;   /* Set a fixed width */
+    height: 220px;
+    box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);
 }
 
-.grid-item2 {
-    margin-left: 25px;
-    grid-column: 2 / 3; /* Span from column line 1 to column line 2 */
+.grid-item2-content {
+    grid-column: 2 / 1; /* Span from column line 1 to column line 2 */
     grid-row: 2 / 3; /* Span from row line 1 to row line 2 */
     padding: 10px;
     background-color: rgb(213, 224, 253);
     border: 2px solid rgb(125, 157, 245);
     pointer-events: none;
     caret-color: transparent;
-    /* text-align: center; */
+    width: 365px;   /* Set a fixed width */
+    height: 180px;
+    box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);
 }
 
-.grid-item3 {
-    margin-left: 150px;
-    margin-right: 120px;
+.grid-item3-content {
     background-color: rgb(213, 224, 253);
     border: 1px solid rgb(125, 157, 245);
     grid-column: 2 / 3; /* Span from column line 1 to column line 2 */
-    grid-row: 1 / 2; /* Span from row line 1 to row line 2 */
+    grid-row: 2 / 3 ; /* Span from row line 1 to row line 2 */
     text-align: center;
     font-weight: 800;
     font-size: medium;
     font-style: italic;
+    color: rgb(60, 107, 235);
     padding: 10px;
     pointer-events: none;
     caret-color: transparent;
+    width: 150px;
+    box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);
+}
+
+.search, .select, .delete, .toCreate, .toTable {
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 }
 
 table {
     border: 2px solid rgb(125, 157, 245);
     border-collapse: collapse;   /* Ensures borders are not double */
     margin-left: 10px;
+    box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);
+     /* horizontal, vertical, blur, spread */
 }
 
 th {
@@ -89,3 +132,93 @@ td {
     padding: 5px;
 }
 
+.inputBox:hover {
+    outline: 2px;
+    border: 1px solid rgb(125, 157, 245);
+}
+
+.inputBox:focus {
+    outline: 2px;
+    border: 1px solid rgb(7, 69, 240);
+}
+
+.inputBox {
+    outline: none; /* Remove default browser outline */
+    border: none;
+    background-color: white;
+    padding: 1.5px;
+    /* padding: 10px; Optional padding */
+    /* border-radius: 4px; Optional border radius */
+}
+
+.price {
+    outline: none; 
+    border: none;
+    color: rgb(101, 101, 102);
+    padding: 1.5px;
+    pointer-events: none;
+}
+
+.bottom:active {
+    background-color: white;
+    border: none;
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+}
+
+.bottom {
+    background-color: white;
+    outline: none;
+    border: none;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.selectOp div:hover {
+    background-color: solid rgb(125, 157, 245);
+}
+
+.containerForSelectBox {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    /* text-align: center; */
+}
+
+.selectBox {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 8px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-size: smaller;
+    width: 85px;
+    height: 2px;
+    caret-color: transparent;
+    user-select: none;
+}
+
+.selectBox:hover {
+    border: 1px solid rgb(125, 157, 245);
+}
+
+.containerForItems {
+    position: absolute;
+    background-color: rgb(213, 224, 253);
+    border: 1px solid rgb(125, 157, 245);
+    z-index: 99;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.fruitItem:hover {
+    background-color:  rgb(125, 157, 245);
+    color: white;
+}
+
+.fruitItem {
+    font-size: small;
+    padding: 8px;
+    cursor: pointer;
+    caret-color: transparent;
+}

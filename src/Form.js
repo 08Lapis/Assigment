@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -24,6 +24,72 @@ export default function Form() {
     const [warn2, setWarn2] = useState();
     const [warn3, setWarn3] = useState();
     const [warn4, setWarn4] = useState();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState('Select a fruit');
+    const fruits = ['Apple', 'Orange', 'Banana', 'Mango', 'Strawberry'];
+    const nrcFM1 = ['12/', '10/'];
+    const nrcFM2 = ['KaMaYa', 'MaYaKa'];
+    const nrcFM3 = ['(N)'];
+    const phFM = ['09'];
+
+    const selectBoxRef = useRef();
+    const dropDownRef = useRef();
+
+    // Select Fruit
+    const eDropDown = () => {
+        console.log('Toggle dropdown clicked');
+        setIsOpen(!isOpen)
+    };
+
+    const eItemSelect = (fruit) => {
+        console.log(`Selected fruit: ${fruit}`);
+        setSelectedItem(fruit);
+        setIsOpen(false);
+        setWarn4('');
+
+        let price = '';
+        switch (fruit) {
+            case "Apple":
+                price = "$10";
+                break;
+            case "Banana":
+                price = "$20";
+                break;
+            case "Orange":
+                price = "$15";
+                break;
+            case "Strawberry":
+                price = "$25";
+                break;
+            case "Mango":
+                price = "$30";
+                break;
+            default:
+                price = "";
+                break;
+        }
+        setInput({...input, fruit : fruit, price: price}); // a state can't be updated more than once without the updater function in the same block as only the last one will be updated and the above ones will be overridden.
+    };
+
+    const eClickOutside = (event) => {
+        if (
+            selectBoxRef.current &&
+            dropDownRef.current &&
+            !selectBoxRef.current.contains(event.target) && // if the clicked element is not inside the Ref
+            !dropDownRef.current.contains(event.target)
+        ) {
+            setIsOpen(false);
+        }
+    }
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('mousedown', eClickOutside);
+        } else {
+            document.removeEventListener('mousedown', eClickOutside);
+        }
+    }, [isOpen]);
     
     // Name 
     const eNameChange = (event) => {
@@ -57,35 +123,6 @@ export default function Form() {
     const ePhNumSelect = (event) => {
         setInput({...input, phNum : event.target.value});
         setWarn3('');
-    }
-
-    // Fruit and Price
-    const eSelect = (event) => {
-        const inFru = event.target.value;
-        setWarn4('');
-        const fruits = inFru; 
-        let price = '';
-        switch (fruits) {
-            case "Apple":
-                price = "$10";
-                break;
-            case "Banana":
-                price = "$20";
-                break;
-            case "Orange":
-                price = "$15";
-                break;
-            case "Strawberry":
-                price = "$25";
-                break;
-            case "Mango":
-                price = "$30";
-                break;
-            default:
-                price = "";
-                break;
-        }
-        setInput({...input, fruit : inFru, price: price}); // a state can't be updated more than once without the updater function in the same block as only the last one will be updated and the above ones will be overridden.
     }
 
     // Save
@@ -177,60 +214,72 @@ export default function Form() {
         setWarn2('');
         setWarn3('');
         setWarn4('');
-    }
+        setSelectedItem('Select a fruit');
+    };
 
     return(
         <div className='createFormGrid'>
             <div className='createForm'>
                 {/* Name */}
-                <input type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
+                <input className='inputBox' type='text' id='name' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
+                {/* <SpeechBubble type="speech">
+        Hello, how are you?
+      </SpeechBubble> */}
                 <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
 
                 {/* NRC */}
-                <select style={{marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
+                <select className='inputBox' style={{marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
                     <option value='12/'> 12/ </option>
                     <option value='10/'> 10/ </option>
                 </select>
 
-                <select style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
+                <select className='inputBox' style={{marginRight:'3px'}} value={input.nrcF2} onChange={eNrcF2Select}>
                     <option value='KaMaYa'> KaMaYa </option>
                     <option value='MaYaKa'> MaYaKa </option>
                 </select>
 
-                <select style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
+                <select className='inputBox' style={{marginRight:'3px'}} value={input.nrcF3} onChange={eNrcF3Select}>
                     <option value='(N)'> (N) </option>
                 </select>
 
-                <input type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
+                <input className='inputBox' type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
                 <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
 
                 {/* Phone */}
-                <select style={{marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
+                <select className='inputBox' style={{marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
                     <option value='09'> 09 </option>
                     <option value='01'> 01 </option>
                 </select>
 
-                <input type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
+                <input className='inputBox' type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
                 <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
 
                 {/* Fruit */}
-                <select value={input.fruit} onChange={eSelect}>
-                    <option value="" disabled hidden> Select a fruit </option>
-                    <option value='Apple'> Apple </option>
-                    <option value='Orange'> Orange </option>
-                    <option value='Banana'> Banana </option>
-                    <option value='Mango'> Mango </option>
-                    <option value='Strawberry'> Strawberry </option>
-                </select>
+                <div className='containerForSelectBox'>
+                    <div className='selectBox' onClick={eDropDown} ref={selectBoxRef}>
+                        {selectedItem}
+                    </div>
+                    {isOpen && 
+                        (
+                            <div className='containerForItems' ref={dropDownRef}>
+                                {fruits.map((fruit, index) => (
+                                    <div key={index} className='fruitItem' onClick={() => eItemSelect(fruit)}>
+                                        {fruit}
+                                    </div>
+                                ))}
+                            </div>
+                        )
+                    }
+                </div>
                 <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
                 
                 {/* Price */}
-                <input type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
+                <input className='price' type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
 
                 {/* Buttons */}
-                <button style={{marginRight:'88px'}} onClick={eSubmit}> Save </button>
+                <button className='bottom' style={{marginRight:'88px'}} onClick={eSubmit}> Save </button>
 
-                <button onClick={eReset}> Reset </button>
+                <button className='bottom' onClick={eReset}> Reset </button>
             </div>
         </div>
     );

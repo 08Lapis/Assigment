@@ -108,15 +108,15 @@ export default function Table() {
 
     return(
         <div>
-            <input style={{marginLeft:'10px'}} type="text" placeholder="Search..." onChange={eSearch} /> <br/> <br/>
+            <input className="search" style={{marginLeft:'10px'}} type="text" placeholder="Search..." onChange={eSearch} /> <br/> <br/>
 
             {/* <Link to='/form'>
                 <button style={{marginLeft:'10px'}}> Create </button>
             </Link> <br/> <br/> */}
 
-            <button style={{marginLeft:'10px', marginRight:'10px'}} onClick={eAllCheck}> {selectButton} </button> 
+            <button className="select" style={{marginLeft:'10px', marginRight:'10px'}} onClick={eAllCheck}> {selectButton} </button> 
 
-            <button onClick={eDelete}> Delete </button>
+            <button className="delete" onClick={eDelete}> Delete </button>
             
             {/* <button style={{marginLeft:'10px', marginRight:'10px'}} onClick={eEdit}> Edit </button> */}
             <br/> <br/>
