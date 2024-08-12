@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $customer = $result->fetch_assoc();
         echo json_encode($customer);
     } else {
-        echo json_encode(["error" => "There is no such ID in the record"]);
+        echo json_encode(["status" => "error"]);
     }
 }
 
