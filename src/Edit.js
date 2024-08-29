@@ -74,6 +74,7 @@ export default function Edit() {
                         if(response.data.status) {
                             alert(`There is no such record of ID : ${paraId}`);
                             setWarn5(true); 
+                            // navigate('/table');
                             return;
                         }
 
@@ -208,7 +209,7 @@ export default function Edit() {
     }
 
     // Save
-    const eSubmit = (event) => {
+    const eSubmit = () => {
         // event.preventDefault();
 
         if(warn5 === true){
@@ -218,16 +219,16 @@ export default function Edit() {
         }
 
         if (!input.name) {
-            setWarn1("Name field can't be blank");
+            setWarn1("Name field cannot be blank");
         } 
         if (!input.nrcNum) {
-            setWarn2("NRC field can't be blank");
+            setWarn2("NRC field cannot be blank");
         } 
         if (!input.phNum) {
-            setWarn3("Phone Number field can't be blank");
+            setWarn3("Phone Number field cannot be blank");
         } 
         if (!input.fruit) {
-            setWarn4("Select field can't be blank");
+            setWarn4("Select field cannot be blank");
         }
 
         if (!input.name || !input.nrcNum || !input.phNum || !input.fruit) {
@@ -252,7 +253,7 @@ export default function Edit() {
         } else if (!patternNrc.test(input.nrcNum)){
             setWarn2("Must have only 6 digits in the NRC field");
         } else if (!patternNrcNoAllZero.test(input.nrcNum)){ 
-            setWarn2("NRC number can't be all zero");
+            setWarn2("The NRC number cannot be all zeros");
         }
 
         if (!pattern.test(input.phNum)){  
@@ -370,10 +371,12 @@ export default function Edit() {
             <div className="grid-item1">
                 <div className="grid-item1-content">
                     {/* Name */}
+                    <span className='warns'> {warn1} </span> <br/>
                     <input className='inputBox' style={{marginLeft:'10px'}} type='text' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
-                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
+                    <br/> <br/> 
 
                     {/* NRC */}
+                    <span className='warns'> {warn2} </span> <br/> 
                     <select className='inputBox' style={{marginLeft:'10px', marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
                         <option value='12/'> 12/ </option>
                         <option value='10/'> 10/ </option>
@@ -389,18 +392,20 @@ export default function Edit() {
                     </select>
 
                     <input className='inputBox' type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
-                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
+                    <br/> <br/> 
 
                     {/* Phone */}
+                    <span className='warns'> {warn3} </span> <br/> 
                     <select className='inputBox' style={{marginLeft:'10px', marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
                         <option value='09'> 09 </option>
                         <option value='01'> 01 </option>
                     </select>
 
                     <input className='inputBox' type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
-                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
+                    <br/> <br/> 
 
                     {/* Fruit */}
+                    <span className='warns'> {warn4} </span> <br/> 
                     <select className='inputBox' style={{marginLeft:'10px'}} value={input.fruit} onChange={eSelect}>
                         <option value="" disabled hidden> Select a fruit </option>
                         <option value='Apple'> Apple </option>
@@ -409,10 +414,10 @@ export default function Edit() {
                         <option value='Mango'> Mango </option>
                         <option value='Strawberry'> Strawberry </option>
                     </select>
-                    <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
+                    <br/> <br/> 
                     
                     {/* Price */}
-                    <input className='price' style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
+                    <input className='price' style={{marginLeft:'10px'}} type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/> <br/> 
 
                     {/* Buttons */}
                     <button className='bottom' style={{marginLeft:'10px', marginRight:'88px'}} onClick={eSubmit}> Save </button>

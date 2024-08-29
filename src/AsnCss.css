@@ -6,7 +6,7 @@
     background-color: rgb(213, 224, 253);
     border: 2px solid rgb(125, 157, 245);
     width: 350px;   /* Set a fixed width */
-    height: 220px;
+    height: 325px;
     /* grid-column: 1 / 2; */
     padding: 10px;
     margin-left: 10px;
@@ -61,7 +61,7 @@
     background-color: rgb(213, 224, 253);
     border: 2px solid rgb(125, 157, 245);
     width: 365px;   /* Set a fixed width */
-    height: 220px;
+    height: 325px;
     box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);
 }
 
@@ -140,6 +140,7 @@ td {
 .inputBox:focus {
     outline: 2px;
     border: 1px solid rgb(7, 69, 240);
+    caret-color: auto;
 }
 
 .inputBox {
@@ -163,6 +164,10 @@ td {
     background-color: white;
     border: none;
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+}
+
+.bottom:hover {
+    border: 1px solid rgb(125, 157, 245);
 }
 
 .bottom {
@@ -221,4 +226,10 @@ td {
     padding: 8px;
     cursor: pointer;
     caret-color: transparent;
+}
+
+.warns {
+    font-size: x-small;
+    color: red;
+    font-style: bold;
 }

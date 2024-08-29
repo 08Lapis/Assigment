@@ -130,16 +130,16 @@ export default function Form() {
         // event.preventDefault();
 
         if (!input.name) {
-            setWarn1("Name field can't be blank");
+            setWarn1("Name field cannot be blank");
         } 
         if (!input.nrcNum) {
-            setWarn2("NRC field can't be blank");
+            setWarn2("NRC field cannot be blank");
         } 
         if (!input.phNum) {
-            setWarn3("Phone Number field can't be blank");
+            setWarn3("Phone Number field cannot be blank");
         } 
         if (!input.fruit) {
-            setWarn4("Select field can't be blank");
+            setWarn4("Select field cannot be blank");
         }
 
         if (!input.name || !input.nrcNum || !input.phNum || !input.fruit) {
@@ -150,6 +150,7 @@ export default function Form() {
         var patternNameCount = /^[a-zA-Z\d][a-zA-Z\d\s]{0,29}$/;
         var pattern = /^\d+$/;
         var patternNrc = /^\d{6}$/;
+        var patternNrcNoAllZero = /^(?!0{6})\d{6}$/;
         var patternPh = /^\d{6,9}$/;
 
         if (!patternName.test(input.name)){
@@ -162,6 +163,8 @@ export default function Form() {
             setWarn2("Enter only number in the NRC field");
         } else if (!patternNrc.test(input.nrcNum)){
             setWarn2("Must have only 6 digits in the NRC field");
+        } else if (!patternNrcNoAllZero.test(input.nrcNum)){ 
+            setWarn2("The NRC number cannot be all zeros");
         }
 
         if (!pattern.test(input.phNum)){  
@@ -170,7 +173,7 @@ export default function Form() {
             setWarn3("Must have only 6 to 9 digits in the Phone Number field");
         } 
 
-        if (!patternName.test(input.name) || !patternNameCount.test(input.name) || !pattern.test(input.nrcNum) || !patternNrc.test(input.nrcNum) || !pattern.test(input.phNum) || !patternPh.test(input.phNum)){
+        if (!patternName.test(input.name) || !patternNameCount.test(input.name) || !pattern.test(input.nrcNum) || !patternNrc.test(input.nrcNum) || !patternNrcNoAllZero.test(input.nrcNum) || !pattern.test(input.phNum) || !patternPh.test(input.phNum)){
             return;
         };
         
@@ -221,13 +224,13 @@ export default function Form() {
         <div className='createFormGrid'>
             <div className='createForm'>
                 {/* Name */}
+                <span className='warns'> {warn1} </span> <br/> 
                 <input className='inputBox' type='text' id='name' name='name' value={input.name} onChange={eNameChange} placeholder='Username' /> 
-                {/* <SpeechBubble type="speech">
-        Hello, how are you?
-      </SpeechBubble> */}
-                <span style={{color : 'red', fontWeight : 'bold'}}> {warn1} </span> <br/> <br/> 
+                <br/> <br/>
+                
 
                 {/* NRC */}
+                <span className='warns'> {warn2} </span> <br/>
                 <select className='inputBox' style={{marginRight:'3px'}} value={input.nrcF1} onChange={eNrcF1Select}>
                     <option value='12/'> 12/ </option>
                     <option value='10/'> 10/ </option>
@@ -243,18 +246,20 @@ export default function Form() {
                 </select>
 
                 <input className='inputBox' type='text' name='nrc' value={input.nrcNum} onChange={eNrcNumSelect} placeholder='NRC' />
-                <span style={{color : 'red', fontWeight : 'bold'}}> {warn2} </span> <br/> <br/> 
+                <br/> <br/> 
 
                 {/* Phone */}
+                <span className='warns'> {warn3} </span> <br/>
                 <select className='inputBox' style={{marginRight:'3px'}} value={input.phF1} onChange={ePhF1Select}>
                     <option value='09'> 09 </option>
                     <option value='01'> 01 </option>
                 </select>
 
                 <input className='inputBox' type='text' name='phone' value={input.phNum} onChange={ePhNumSelect} placeholder='Phone' /> 
-                <span style={{color : 'red', fontWeight : 'bold'}}> {warn3} </span> <br/> <br/> 
+                <br/> <br/> 
 
                 {/* Fruit */}
+                <span className='warns'> {warn4} </span> <br/>
                 <div className='containerForSelectBox'>
                     <div className='selectBox' onClick={eDropDown} ref={selectBoxRef}>
                         {selectedItem}
@@ -271,10 +276,10 @@ export default function Form() {
                         )
                     }
                 </div>
-                <span style={{color : 'red', fontWeight : 'bold'}}> {warn4} </span> <br/> <br/> 
+                <br/> <br/> 
                 
                 {/* Price */}
-                <input className='price' type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/>
+                <input className='price' type='text' value={input.price} placeholder="Price" readOnly /> <br/> <br/> <br/>
 
                 {/* Buttons */}
                 <button className='bottom' style={{marginRight:'88px'}} onClick={eSubmit}> Save </button>
