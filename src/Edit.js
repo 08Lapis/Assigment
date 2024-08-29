@@ -213,7 +213,7 @@ export default function Edit() {
         // event.preventDefault();
 
         if(warn5 === true){
-            alert("You can't edit a record that does not exist");
+            alert("A record that does not exist cannot be edited");
             navigate('/table');
             return;
         }
