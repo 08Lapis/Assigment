@@ -13,7 +13,7 @@ function App() {
       <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/form' element={<Form />} />
-          <Route path='/form/:paraId' element={<Form />} />
+          {/* <Route path='/form/:paraId' element={<Form />} /> */}
           <Route path='/table' element={<Table />} />
           <Route path='/edit/:paraId' element={<Edit />} />
       </Routes>

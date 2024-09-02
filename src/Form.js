@@ -28,10 +28,10 @@ export default function Form() {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState('Select a fruit');
     const fruits = ['Apple', 'Orange', 'Banana', 'Mango', 'Strawberry'];
-    const nrcFM1 = ['12/', '10/'];
-    const nrcFM2 = ['KaMaYa', 'MaYaKa'];
-    const nrcFM3 = ['(N)'];
-    const phFM = ['09'];
+    // const nrcFM1 = ['12/', '10/'];
+    // const nrcFM2 = ['KaMaYa', 'MaYaKa'];
+    // const nrcFM3 = ['(N)'];
+    // const phFM = ['09'];
 
     const selectBoxRef = useRef();
     const dropDownRef = useRef();
